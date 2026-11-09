@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>420</width>
+    <height>340</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Mitsubishi PLC SLMP 3E Monitor</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="rootLayout">
+
+    <item>
+     <widget class="QGroupBox" name="connGroupBox">
+      <property name="title">
+       <string>PLC 연결</string>
+      </property>
+      <layout class="QFormLayout" name="connFormLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="ipLabel">
+         <property name="text">
+          <string>IP 주소</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="ip_edit">
+         <property name="text">
+          <string>192.168.0.10</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="portLabel">
+         <property name="text">
+          <string>포트</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="port_edit">
+         <property name="text">
+          <string>5007</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <item>
+     <layout class="QHBoxLayout" name="btnRowLayout">
+      <item>
+       <widget class="QPushButton" name="connect_btn">
+        <property name="text">
+         <string>연결</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="disconnect_btn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>연결 해제</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+    <item>
+     <widget class="QGroupBox" name="deviceGroupBox">
+      <property name="title">
+       <string>읽기 대상</string>
+      </property>
+      <layout class="QFormLayout" name="deviceFormLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="deviceLabel">
+         <property name="text">
+          <string>디바이스</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="device_edit">
+         <property name="text">
+          <string>D</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="headNoLabel">
+         <property name="text">
+          <string>번호</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="head_no_spin">
+         <property name="minimum">
+          <number>0</number>
+         </property>
+         <property name="maximum">
+          <number>65535</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+
+    <item>
+     <layout class="QHBoxLayout" name="pollRowLayout">
+      <item>
+       <widget class="QCheckBox" name="auto_check">
+        <property name="text">
+         <string>자동 갱신</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="interval_spin">
+        <property name="suffix">
+         <string> ms</string>
+        </property>
+        <property name="minimum">
+         <number>100</number>
+        </property>
+        <property name="maximum">
+         <number>60000</number>
+        </property>
+        <property name="singleStep">
+         <number>100</number>
+        </property>
+        <property name="value">
+         <number>1000</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="read_once_btn">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>한 번 읽기</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+    <item>
+     <widget class="QLabel" name="value_label">
+      <property name="styleSheet">
+       <string>font-size: 36px; font-weight: bold; qproperty-alignment: AlignCenter;</string>
+      </property>
+      <property name="text">
+       <string>D100 = ---</string>
+      </property>
+     </widget>
+    </item>
+
+    <item>
+     <widget class="QLabel" name="status_label">
+      <property name="text">
+       <string>연결되지 않음</string>
+      </property>
+     </widget>
+    </item>
+
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

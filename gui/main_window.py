@@ -1,19 +1,12 @@
+import os
+
+from PyQt6 import uic
 from PyQt6.QtCore import QThread, pyqtSignal, pyqtSlot
-from PyQt6.QtWidgets import (
-    QCheckBox,
-    QFormLayout,
-    QGroupBox,
-    QHBoxLayout,
-    QLabel,
-    QLineEdit,
-    QMainWindow,
-    QPushButton,
-    QSpinBox,
-    QVBoxLayout,
-    QWidget,
-)
+from PyQt6.QtWidgets import QMainWindow
 
 from gui.worker import SLMPWorker
+
+_UI_PATH = os.path.join(os.path.dirname(__file__), "main_window.ui")
 
 
 class MainWindow(QMainWindow):
@@ -26,66 +19,12 @@ class MainWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Mitsubishi PLC SLMP 3E Monitor")
-        self.resize(420, 340)
+        uic.loadUi(_UI_PATH, self)
 
-        self._build_ui()
+        self._wire_ui()
         self._start_worker()
 
-    def _build_ui(self) -> None:
-        central = QWidget()
-        self.setCentralWidget(central)
-        root = QVBoxLayout(central)
-
-        conn_box = QGroupBox("PLC 연결")
-        form = QFormLayout(conn_box)
-        self.ip_edit = QLineEdit("192.168.0.10")
-        self.port_edit = QLineEdit("5007")
-        form.addRow("IP 주소", self.ip_edit)
-        form.addRow("포트", self.port_edit)
-        root.addWidget(conn_box)
-
-        btn_row = QHBoxLayout()
-        self.connect_btn = QPushButton("연결")
-        self.disconnect_btn = QPushButton("연결 해제")
-        self.disconnect_btn.setEnabled(False)
-        btn_row.addWidget(self.connect_btn)
-        btn_row.addWidget(self.disconnect_btn)
-        root.addLayout(btn_row)
-
-        device_box = QGroupBox("읽기 대상")
-        dform = QFormLayout(device_box)
-        self.device_edit = QLineEdit("D")
-        self.head_no_spin = QSpinBox()
-        self.head_no_spin.setRange(0, 65535)
-        self.head_no_spin.setValue(100)
-        dform.addRow("디바이스", self.device_edit)
-        dform.addRow("번호", self.head_no_spin)
-        root.addWidget(device_box)
-
-        poll_row = QHBoxLayout()
-        self.auto_check = QCheckBox("자동 갱신")
-        self.interval_spin = QSpinBox()
-        self.interval_spin.setRange(100, 60000)
-        self.interval_spin.setSingleStep(100)
-        self.interval_spin.setValue(1000)
-        self.interval_spin.setSuffix(" ms")
-        self.read_once_btn = QPushButton("한 번 읽기")
-        self.read_once_btn.setEnabled(False)
-        poll_row.addWidget(self.auto_check)
-        poll_row.addWidget(self.interval_spin)
-        poll_row.addWidget(self.read_once_btn)
-        root.addLayout(poll_row)
-
-        self.value_label = QLabel("D100 = ---")
-        self.value_label.setStyleSheet(
-            "font-size: 36px; font-weight: bold; qproperty-alignment: AlignCenter;"
-        )
-        root.addWidget(self.value_label)
-
-        self.status_label = QLabel("연결되지 않음")
-        root.addWidget(self.status_label)
-
+    def _wire_ui(self) -> None:
         self.connect_btn.clicked.connect(self.on_connect_clicked)
         self.disconnect_btn.clicked.connect(self.on_disconnect_clicked)
         self.read_once_btn.clicked.connect(self.on_read_once_clicked)
